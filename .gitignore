@@ -1,0 +1,141 @@
+# Claude Code
+.claude/
+*.claude
+
+# Virtual Environments
+venv/
+env/
+.venv/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+.idea_modules/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Spyder
+.spyderproject
+.spyproject
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Data files (large datasets)
+*.csv.gz
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.pickle
+*.pkl
+
+# Model files
+*.model
+*.joblib
+*.pt
+*.pth
+*.ckpt
+*.weights
+*.h5
+*.keras
+
+# CatBoost specific
+catboost_info/
+catboost_training/
+
+# LightGBM specific
+lightgbm_model.txt
+lgb_model.txt
+
+# XGBoost specific
+*.xgb
+xgboost_model/
+
+# Logs
+*.log
+logs/
+mlruns/
+wandb/
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*~.nib
+
+# Optuna
+.optuna/
+optuna.db
+
+# Miscellaneous
+.env
+.env.local
+.env.*.local
+*.orig

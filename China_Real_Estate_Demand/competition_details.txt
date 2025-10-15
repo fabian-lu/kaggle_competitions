@@ -1,0 +1,578 @@
+Real Estate Demand Prediction
+China's first real-estate demand prediction challenge, developing models to forecast housing demand and guide real investment decisions.
+
+Overview
+-----------------------------------------------------------------------------------------------------------------------
+Welcome to the Real Estate Demand Prediction Challenge! We are inviting the Kaggle community to participate in the first Kaggle competition that focuses on China's real estate market and help forecast monthly residential demand in China.
+
+We look forward to seeing how you apply your data science expertise to help us shape the future of real estate!
+
+Start
+
+2 months ago
+Close
+18 days to go
+Description
+In China’s fast-evolving and highly dynamic housing market, accurately forecasting residential demand is vital for investment and development decisions. This competition challenges you to develop a machine learning model that predicts each sector's monthly sales for newly launched private residential projects, using historical transaction data, market conditions, and other relevant features.
+
+Why Participate:
+Real-World Impact: Your model will influence investment decisions and future development strategies, helping shape China's housing market.
+
+Networking Opportunities: Engage with industry professionals and fellow Kaggle participants. Winners or excellent participants may be invited into the AI panel of a world renowned real estate group.
+
+Prizes and Recognition: Win exciting prizes and showcase your skills to a global audience. This is your opportunity to tackle a real-world business problem and showcase your skills in data science and predictive modeling. Your insights will help shape the future of urban living in one of the world's most vibrant cities.
+
+How to Get Started:
+Review the provided data and competition details.
+
+Build and refine your predictive model.
+
+Submit your predictions.
+
+We look forward to seeing how you apply your data science expertise to help us shape the future of real estate!
+
+Evaluation
+Submissions will be evaluated using a custom two-stage metric based on the absolute percentage error between predicted and actual values. The custom score is computed from a scaled MAPE with two stages.
+
+First stage:
+
+If over 30% of the submitted samples have absolute percentage errors exceeding 100%, a score of 0 is immediately given.
+
+score = 0  if  (1/n) * Σ_{i=1}^n  I{ (|y_i^pred - y_i^true| / y_i^true) > 1 }  > 0.3
+
+Second stage:
+
+Otherwise, an MAPE is calculated with the samples that have absolute percentage errors less than or equal to 1. Then the MAPE is divided by the fraction of absolute percentage errors less than or equal to 1. Finally, the score is 1 minus the scaled MAPE.
+
+D = { |y_i^pred - y_i^true| / y_i^true  s.t.  |y_i^pred - y_i^true| ≤ y_i^true }
+
+score = 1 - average(D) / (|D| / n)
+
+where |D| is the magnitude of D.
+
+Submission File
+The submission file must contain exactly these two columns: id and new_house_transaction_amount. Each id is formatted as a month in the form of %Y %b and a sector id in the form of sector n joined by an underscore. For each id in the test set, you must predict the total new house transaction amount in ten thousand Chinese Yuan for the specific month and sector. The total new house transaction amount is equal to total new house transaction area times transaction price per area. The file should contain a header and have the following format:
+
+id,new_house_transaction_amount
+2024 Aug_sector 1,49921.00868
+2024 Aug_sector 2,92356.22985
+2024 Aug_sector 3,480269.7819
+etc.
+Submission Requirements
+Preserve row order: Maintain the exact same row order as in test.csv
+Exact Columns: The submission file should contain the exact columns as in test.csv
+Prizes
+Top three participants/teams will win prizes with potential bonus.
+
+Total Prizes Available: $10,000 USD
+
+First Prize(1 winner) - $2,500 USD or $5,000 USD with bonus
+Second Prize(1 winner) - $1,500 USD or $3,000 USD with bonus
+Third Prize(1 winner) - $1,000 USD or $2,000 USD with bonus
+Bonus Performance Threshold
+Winners who achieve final score ≥ 0.75 receive a bonus by doubling their prize amount.
+
+Winner Selection
+Additional Verification: Private leaderboard metrics are not final. Organizers will request code from top-10 participants for final evaluation. Winning models may be incorporated into a real estate company's proprietary forecasting system for internal use.
+New Data Testing: Organizers reserve the right to test candidate solutions on unpublished 2025 data.
+
+Citation
+Lazylo. Real Estate Demand Prediction. https://kaggle.com/competitions/china-real-estate-demand-prediction, 2025. Kaggle.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Dataset Description
+Participants are expected to use data in the train folder which contains all files for train set to predict monthly price of new house transactions for each sector.
+
+Predict Target
+The target is in train/new_house_transactions.csv file under column amount_new_house_transaction. Please note that not all sectors and months are included in the file. For example, there is no data in the file for 2019 Jan_sector 3, which means participants are expected to predict a value of 0.
+
+month,sector,num_new_house_transactions,area_new_house_transactions,amount_new_house_transaction,...
+2019 Jan_sector 1,52,4906,28184,...
+2019 Jan_sector 2,145,15933,17747,...
+2019 Jan_sector 4,6,725,28004,...
+2019 Jan_sector 5,2,212,37432,...
+2019 Jan_sector 6,5,773,15992,...
+Avoid Data Leakage
+When predicting for a certain month, participants are not supposed to use any data corresponding to a future time period relative to said month.
+
+Files
+train/*.csv - the training set
+test.csv - the test set
+sample_submission.csv - a sample submission file in the correct format
+Columns
+Unless specified otherwise, all appearances of yuan in this section stand for the Chinese yuan, the official currency of China.
+
+train/pre_owned_house_transactions.csv
+
+month: The month of the transaction.
+sector: The specific geographic sector where the transaction occurred.
+area_pre_owned_house_transactions: The total area of pre-owned house transactions in square meters.
+amount_pre_owned_house_transactions: The total monetary value of pre-owned house transactions in 10,000 yuan.
+num_pre_owned_house_transactions: The total number of pre-owned house transactions.
+price_pre_owned_house_transactions: The average price per square meter of pre-owned house transactions in yuan.
+train/pre_owned_house_transactions_nearby_sectors.csv
+
+month: The month of the transaction.
+sector: The specific geographic sector of interest.
+area_pre_owned_house_transactions_nearby_sectors: The total area of pre-owned house transactions in nearby sectors in square meters.
+amount_pre_owned_house_transactions_nearby_sectors: The total monetary value of pre-owned house transactions in nearby sectors in 10,000 yuan.
+num_pre_owned_house_transactions_nearby_sectors: The total number of pre-owned house transactions in nearby sectors.
+price_pre_owned_house_transactions_nearby_sectors: The average price per square meter of pre-owned house transactions in nearby sectors in yuan.
+train/land_transactions.csv
+
+month: The month of the transaction.
+sector: The specific geographic sector where the land transaction occurred.
+num_land_transactions: The total number of land transactions.
+construction_area: The total area of land designated for construction in square meters.
+planned_building_area: The total planned building area on the transacted land in square meters.
+transaction_amount: The total monetary value of land transactions in 10,000 yuan.
+train/land_transactions_nearby_sectors.csv
+
+month: The month of the transaction.
+sector: The specific geographic sector of interest.
+num_land_transactions_nearby_sectors: The total number of land transactions in nearby sectors.
+construction_area_nearby_sectors: The total area of land designated for construction in nearby sectors in square meters.
+planned_building_area_nearby_sectors: The total planned building area on transacted land in nearby sectors in square meters.
+transaction_amount_nearby_sectors: The total monetary value of land transactions in nearby sectors in 10,000 yuan.
+train/new_house_transactions.csv
+
+month: The month of the transaction.
+sector: The specific geographic sector where the new house transaction occurred.
+num_new_house_transactions: The total number of new house transactions.
+area_new_house_transactions: The total area of new house transactions in square meters.
+price_new_house_transactions: The average price per square meter of new house transactions in yuan.
+amount_new_house_transactions: The total monetary value of new house transactions in 10,000 yuan.
+area_per_unit_new_house_transactions: The average area per new house transaction unit in square meters per unit.
+total_price_per_unit_new_house_transactions: The average total price per new house transaction unit in 10,000 yuan per unit.
+num_new_house_available_for_sale: The total number of new houses available for sale.
+area_new_house_available_for_sale: The total area of new houses available for sale in square meters.
+period_new_house_sell_through: The estimated time in months to sell all available new houses.
+train/new_house_transactions_nearby_sectors.csv
+
+month: The month of the transaction.
+sector: The specific geographic sector of interest.
+num_new_house_transactions_nearby_sectors: The total number of new house transactions in nearby sectors.
+area_new_house_transactions_nearby_sectors: The total area of new house transactions in nearby sectors in square meters.
+price_new_house_transactions_nearby_sectors: The average price per square meter of new house transactions in nearby sectors in yuan.
+amount_new_house_transactions_nearby_sectors: The total monetary value of new house transactions in nearby sectors in 10,000 yuan.
+area_per_unit_new_house_transactions_nearby_sectors: The average area per new house transaction unit in nearby sectors in square meters per unit.
+total_price_per_unit_new_house_transactions_nearby_sectors: The average total price per new house transaction unit in nearby sectors in 10,000 yuan per unit.
+num_new_house_available_for_sale_nearby_sectors: The total number of new houses available for sale in nearby sectors.
+area_new_house_available_for_sale_nearby_sectors: The total area of new houses available for sale in nearby sectors in square meters.
+period_new_house_sell_through_nearby_sectors: The estimated time in months to sell all available new houses in nearby sectors.
+train/sector_POI.csv
+
+sector: The specific geographic sector.
+sector_coverage: The geographical extent or area covered by the sector.
+population_scale: The general size of the population within the sector.
+residential_area: The presence or extent of residential zones within the sector.
+office_building: The presence or extent of office buildings within the sector.
+commercial_area: The presence or extent of commercial zones within the sector.
+resident_population: The number of people residing in the sector.
+office_population: The number of people working in offices within the sector.
+number_of_shops: The total count of shops in the sector.
+catering: The number or density of catering establishments.
+retail: The number or density of retail establishments.
+hotel: The number or density of hotel establishments.
+transportation_station: The number or density of transportation stations.
+education: The number or density of educational facilities.
+leisure_and_entertainment: The number or density of leisure and entertainment venues.
+bus_station_cnt: The count of bus stations.
+subway_station_cnt: The count of subway stations.
+rentable_shops: The number of shops available for rent.
+surrounding_housing_average_price: The average price of housing in the surrounding area.
+surrounding_shop_average_rent: The average rent of shops in the surrounding area.
+leisure_entertainment_entertainment_venue_game_arcade: The number or density of game arcades.
+leisure_entertainment_entertainment_venue_party_house: The number or density of party houses.
+leisure_entertainment_cultural_venue_cultural_palace: The number or density of cultural palaces.
+office_building_industrial_building_industrial_building: The number or density of industrial buildings used as office spaces.
+education_training_school_education_middle_school: The number or density of middle schools.
+education_training_school_education_primary_school: The number or density of primary schools.
+education_training_school_education_kindergarten: The number or density of kindergartens.
+education_training_school_education_research_institution: The number or density of research institutions.
+medical_health: The number or density of general medical and health facilities.
+medical_health_specialty_hospital: The number or density of specialty hospitals.
+medical_health_tcm_hospital: The number or density of Traditional Chinese Medicine (TCM) hospitals.
+medical_health_physical_examination_institution: The number or density of physical examination institutions.
+medical_health_veterinary_station: The number or density of veterinary stations.
+medical_health_pharmaceutical_healthcare: The number or density of pharmaceutical healthcare providers.
+medical_health_rehabilitation_institution: The number or density of rehabilitation institutions.
+medical_health_first_aid_center: The number or density of first aid centers.
+medical_health_blood_donation_station: The number or density of blood donation stations.
+medical_health_disease_prevention_institution: The number or density of disease prevention institutions.
+medical_health_general_hospital: The number or density of general hospitals.
+medical_health_clinic: The number or density of clinics.
+transportation_facilities_service_bus_station: The presence or density of bus stations.
+transportation_facilities_service_subway_station: The presence or density of subway stations.
+transportation_facilities_service_airport_related: The presence or density of airport-related facilities.
+transportation_facilities_service_port_terminal: The presence or density of port or terminal facilities.
+transportation_facilities_service_train_station: The presence or density of train stations.
+transportation_facilities_service_light_rail_station: The presence or density of light rail stations.
+transportation_facilities_service_long_distance_bus_station: The presence or density of long-distance bus stations.
+number_of_leisure_and_entertainment_stores: The count of leisure and entertainment stores.
+number_of_other_stores: The count of miscellaneous other stores.
+number_of_other_anchor_stores: The count of other major or anchor stores.
+number_of_home_appliance_stores: The count of home appliance stores.
+number_of_skincare_cosmetics_stores: The count of skincare and cosmetics stores.
+number_of_fashion_stores: The count of fashion stores.
+number_of_service_stores: The count of service-oriented stores.
+number_of_jewelry_stores: The count of jewelry stores.
+number_of_lifestyle_leisure_stores: The count of lifestyle and leisure stores.
+number_of_supermarket_convenience_stores: The count of supermarkets and convenience stores.
+number_of_catering_food_stores: The count of catering and food stores.
+number_of_residential_commercial: The count of commercial establishments within residential areas.
+number_of_office_building_commercial: The count of commercial establishments within office buildings.
+number_of_commercial_buildings: The count of dedicated commercial buildings.
+number_of_hypermarkets: The count of hypermarkets.
+number_of_department_stores: The count of department stores.
+number_of_shopping_centers: The count of shopping centers.
+number_of_hotel_commercial: The count of commercial establishments within hotels.
+number_of_third_tier_shopping_malls_in_business_district: The count of third-tier shopping malls within the business district.
+number_of_second_tier_shopping_malls_in_business_district: The count of second-tier shopping malls within the business district.
+number_of_city_winner_malls: The count of high-performing "city winner" malls.
+number_of_shopping_malls_with_street_facing_shops: The count of shopping malls featuring street-facing shops.
+number_of_unranked_malls: The count of shopping malls without a specific ranking.
+number_of_community_malls: The count of community-focused malls.
+number_of_community_winner_malls: The count of high-performing "community winner" malls.
+number_of_key_focus_malls: The count of shopping malls identified for key focus.
+population_scale_dense: The density of the population scale within the sector.
+residential_area_dense: The density of residential areas within the sector.
+office_building_dense: The density of office buildings within the sector.
+commercial_area_dense: The density of commercial areas within the sector.
+resident_population_dense: The density of the resident population within the sector.
+office_population_dense: The density of the office population within the sector.
+number_of_shops_dense: The density of shops within the sector.
+catering_dense: The density of catering establishments within the sector.
+retail_dense: The density of retail establishments within the sector.
+hotel_dense: The density of hotel establishments within the sector.
+transportation_station_dense: The density of transportation stations within the sector.
+education_dense: The density of educational facilities within the sector.
+leisure_and_entertainment_dense: The density of leisure and entertainment venues within the sector.
+bus_station_cnt_dense: The density of bus stations.
+subway_station_cnt_dense: The density of subway stations.
+rentable_shops_dense: The density of rentable shops.
+leisure_entertainment_stores_dense: The density of leisure and entertainment stores.
+other_stores_dense: The density of miscellaneous other stores.
+other_anchor_stores_dense: The density of other major or anchor stores.
+home_appliance_stores_dense: The density of home appliance stores.
+skincare_cosmetics_stores_dense: The density of skincare and cosmetics stores.
+fashion_stores_dense: The density of fashion stores.
+service_stores_dense: The density of service-oriented stores.
+jewelry_stores_dense: The density of jewelry stores.
+lifestyle_leisure_stores_dense: The density of lifestyle and leisure stores.
+supermarket_convenience_stores_dense: The density of supermarkets and convenience stores.
+catering_food_stores_dense: The density of catering and food stores.
+residential_commercial_dense: The density of commercial establishments within residential areas.
+office_building_commercial_dense: The density of commercial establishments within office buildings.
+commercial_buildings_dense: The density of dedicated commercial buildings.
+hypermarkets_dense: The density of hypermarkets.
+department_stores_dense: The density of department stores.
+shopping_centers_dense: The density of shopping centers.
+hotel_commercial_dense: The density of commercial establishments within hotels.
+third_tier_shopping_malls_in_business_district_dense: The density of third-tier shopping malls within the business district.
+second_tier_shopping_malls_in_business_district_dense: The density of second-tier shopping malls within the business district.
+city_winner_malls_dense: The density of high-performing "city winner" malls.
+shopping_malls_with_street_facing_shops_dense: The density of shopping malls featuring street-facing shops.
+unranked_malls_dense: The density of shopping malls without a specific ranking.
+community_malls_dense: The density of community-focused malls.
+community_winner_malls_dense: The density of high-performing "community winner" malls.
+key_focus_malls_dense: The density of shopping malls identified for key focus.
+transportation_facilities_service_bus_station_dense: The density of bus stations.
+transportation_facilities_service_subway_station_dense: The density of subway stations.
+transportation_facilities_service_airport_related_dense: The density of airport-related facilities.
+transportation_facilities_service_port_terminal_dense: The density of port or terminal facilities.
+transportation_facilities_service_train_station_dense: The density of train stations.
+transportation_facilities_service_light_rail_station_dense: The density of light rail stations.
+transportation_facilities_service_long_distance_bus_station_dense: The density of long-distance bus stations.
+leisure_entertainment_entertainment_venue_game_arcade_dense: The density of game arcades.
+leisure_entertainment_entertainment_venue_party_house_dense: The density of party houses.
+leisure_entertainment_cultural_venue_cultural_palace_dense: The density of cultural palaces.
+office_building_industrial_building_industrial_building_dense: The density of industrial buildings used as office spaces.
+medical_health_dense: The density of general medical and health facilities.
+medical_health_specialty_hospital_dense: The density of specialty hospitals.
+medical_health_tcm_hospital_dense: The density of Traditional Chinese Medicine (TCM) hospitals.
+medical_health_physical_examination_institution_dense: The density of physical examination institutions.
+medical_health_veterinary_station_dense: The density of veterinary stations.
+medical_health_pharmaceutical_healthcare_dense: The density of pharmaceutical healthcare providers.
+medical_health_rehabilitation_institution_dense: The density of rehabilitation institutions.
+medical_health_first_aid_center_dense: The density of first aid centers.
+medical_health_blood_donation_station_dense: The density of blood donation stations.
+medical_health_disease_prevention_institution_dense: The density of disease prevention institutions.
+medical_health_general_hospital_dense: The density of general hospitals.
+medical_health_clinic_dense: The density of clinics.
+education_training_school_education_middle_school_dense: The density of middle schools.
+education_training_school_education_primary_school_dense: The density of primary schools.
+education_training_school_education_kindergarten_dense: The density of kindergartens.
+education_training_school_education_research_institution_dense: The density of research institutions.
+train/city_search_index.csv
+
+month: The month the search data was recorded.
+keyword: The specific search term.
+source: The origin or platform of the search data.
+search_volume: The total number of searches for the keyword.
+train/city_indexes.csv
+
+city_indicator_data_year: The year to which the city indicator data pertains.
+year_end_registered_population_10k: The registered population at year-end in tens of thousands.
+total_households_10k: The total number of households in tens of thousands.
+year_end_resident_population_10k: The permanent resident population at year-end in tens of thousands.
+year_end_total_employed_population_10k: The total employed population at year-end in tens of thousands.
+year_end_urban_non_private_employees_10k: The number of urban non-private unit employees at year-end in tens of thousands.
+private_individual_and_other_employees_10k: The number of private, individual, and other employees in tens of thousands.
+private_individual_ratio: The proportion of private and individual employees.
+national_year_end_total_population_10k: The national total population at year-end in tens of thousands.
+resident_registered_ratio: The ratio of permanent residents to registered population.
+under_18_10k: The population under 18 years old in tens of thousands.
+18_60_years_10k: The population aged 18 to 60 years old in tens of thousands.
+over_60_years_10k: The population over 60 years old in tens of thousands.
+total: The total population count.
+under_18_percent: The percentage of the population under 18 years old.
+18_60_years_percent: The percentage of the population aged 18 to 60 years old.
+over_60_years_percent: The percentage of the population over 60 years old.
+gdp_100m: The Gross Domestic Product (GDP) in 100 million yuan.
+primary_industry_100m: The output value of the primary industry in 100 million yuan.
+secondary_industry_100m: The output value of the secondary industry in 100 million yuan.
+tertiary_industry_100m: The output value of the tertiary industry in 100 million yuan.
+gdp_per_capita_yuan: The GDP per capita in yuan.
+national_gdp_100m: The national GDP in 100 million yuan.
+national_economic_primacy: An indicator of the city's economic dominance compared to the nation.
+national_population_share: The city's share of the national population.
+gdp_population_ratio: The ratio of the city's GDP primacy to its national population share.
+secondary_industry_development_gdp_share: The share of the secondary industry in the GDP, indicating its development.
+tertiary_industry_development_gdp_share: The share of the tertiary industry in the GDP, indicating its development.
+employed_population: The total number of employed individuals.
+primary_industry_percent: The percentage of the employed population in the primary industry.
+secondary_industry_percent: The percentage of the employed population in the secondary industry.
+tertiary_industry_percent: The percentage of the employed population in the tertiary industry.
+white_collar_service_vs_blue_collar_manufacturing_ratio: The ratio of white-collar (service industry) to blue-collar (manufacturing industry) population.
+general_public_budget_revenue_100m: The general public budget revenue in 100 million yuan.
+personal_income_tax_100m: The personal income tax collected in 100 million yuan.
+per_capita_personal_income_tax_yuan: The per capita personal income tax in yuan.
+general_public_budget_expenditure_100m: The general public budget expenditure in 100 million yuan.
+total_retail_sales_of_consumer_goods_100m: The total retail sales of consumer goods in 100 million yuan.
+retail_sales_growth_rate: The growth rate of retail sales.
+urban_consumer_price_index_previous_year_100: The urban consumer price index, with the previous year set as 100.
+annual_average_wage_urban_non_private_employees_yuan: The annual average wage of urban non-private unit employees in yuan.
+annual_average_wage_urban_non_private_on_duty_employees_yuan: The annual average wage of urban non-private on-duty employees in yuan.
+per_capita_disposable_income_absolute_yuan: The absolute value of per capita disposable income in yuan.
+per_capita_disposable_income_index_previous_year_100: The per capita disposable income index, with the previous year set as 100.
+engel_coefficient: The Engel coefficient, indicating the proportion of income spent on food.
+per_capita_housing_area_sqm: The per capita housing area in square meters.
+number_of_universities: The total count of universities and colleges.
+university_students_10k: The number of university students in tens of thousands.
+number_of_middle_schools: The total count of middle schools.
+middle_school_students_10k: The number of middle school students in tens of thousands.
+number_of_primary_schools: The total count of primary schools.
+primary_school_students_10k: The number of primary school students in tens of thousands.
+number_of_kindergartens: The total count of kindergartens.
+kindergarten_students_10k: The number of kindergarten students in tens of thousands.
+hospitals_health_centers: The total count of hospitals and health centers.
+hospital_beds_10k: The number of hospital beds in tens of thousands.
+health_technical_personnel_10k: The number of health technical personnel in tens of thousands.
+doctors_10k: The number of doctors in tens of thousands.
+road_length_km: The total length of roads in kilometers.
+road_area_10k_sqm: The total area of roads in 10,000 square meters.
+per_capita_urban_road_area_sqm: The per capita urban road area in square meters.
+number_of_operating_bus_lines: The total count of operating bus lines.
+operating_bus_line_length_km: The total length of operating bus lines in kilometers.
+internet_broadband_access_subscribers_10k: The number of internet broadband access subscribers in tens of thousands.
+internet_broadband_access_ratio: The ratio of internet broadband access.
+number_of_industrial_enterprises_above_designated_size: The total count of industrial enterprises above a designated size.
+total_current_assets_10k: The total current assets in 10,000 yuan.
+total_fixed_assets_10k: The total fixed assets in 10,000 yuan.
+main_business_taxes_and_surcharges_10k: The main business taxes and surcharges in 10,000 yuan.
+total_fixed_asset_investment_10k: The total fixed asset investment in 10,000 yuan.
+real_estate_development_investment_completed_10k: The completed real estate development investment in 10,000 yuan.
+residential_development_investment_completed_10k: The completed residential development investment in 10,000 yuan.
+science_expenditure_10k: The expenditure on science in 10,000 yuan.
+education_expenditure_10k: The expenditure on education in 10,000 yuan.
+-----------------------------------------------------------------------------------------------------------------------
+ENTRY IN THIS COMPETITION CONSTITUTES YOUR ACCEPTANCE OF THESE OFFICIAL COMPETITION RULES.
+The Competition named below is a skills-based competition to promote and further the field of data science. You must register via the Competition Website to enter. To enter the Competition, you must agree to these Official Competition Rules, which incorporate by reference the provisions and content of the Competition Website and any Specific Competition Rules herein (collectively, the "Rules"). Please read these Rules carefully before entry to ensure you understand and agree. You further agree that Submission in the Competition constitutes agreement to these Rules. You may not submit to the Competition and are not eligible to receive the prizes associated with this Competition unless you agree to these Rules. These Rules form a binding legal agreement between you and the Competition Sponsor with respect to the Competition. Your competition Submissions must conform to the requirements stated on the Competition Website. Your Submissions will be scored based on the evaluation metric described on the Competition Website. Subject to compliance with the Competition Rules, Prizes, if any, will be awarded to Participants with the best scores, based on the merits of the data science models submitted. See below for the complete Competition Rules.
+
+You cannot sign up to Kaggle from multiple accounts and therefore you cannot enter or submit from multiple accounts.
+
+1. COMPETITION-SPECIFIC TERMS
+1.1. COMPETITION TITLE
+Real Estate Demand Prediction
+
+1.2. COMPETITION SPONSOR
+1.3. COMPETITION SPONSOR ADDRESS
+1.4. COMPETITION WEBSITE
+https://www.kaggle.com/competitions/real-estate-demand-prediction
+
+1.5. TOTAL PRIZES AVAILABLE: $10,000 USD
+
+First Prize(1 winner): $2,500 USD or $5,000 USD (with bonus)
+Second Prize(1 winner): $1,500 USD or $3,000 USD (with bonus)
+Third Prize(1 winner): $1,000 USD or $2,000 USD (with bonus)
+
+Bonus - Performance Threshold:
+Winners who achieve final score ≥ 0.75 receive bonus by doubling their prize amount.
+
+2. COMPETITION-SPECIFIC RULES
+In addition to the provisions of the General Competition Rules below, you understand and agree to these Competition-Specific Rules required by the Competition Sponsor:
+
+2.1. TEAM LIMITS
+a. The maximum Team size is five (5).
+b. The Team leader may perform team mergers. In order to merge, the combined Team must have a total Submission count less than or equal to the maximum allowed as of the Team Merger Deadline. The maximum allowed is the number of Submissions per day multiplied by the number of days the competition has been running.
+
+2.2. SUBMISSION LIMITS
+a. You may submit a maximum of five (5) Submissions per day.
+b. You may select up to two (2) Final Submissions for judging.
+
+2.3. COMPETITION TIMELINE
+a. Competition Timeline dates (including Entry Deadline, Final Submission Deadline, Start Date, and Team Merger Deadline, as applicable) are reflected on the competition’s Overview > Timeline page.
+
+2.4. COMPETITION DATA
+a. Data Access and Use.
+
+You may access and use the Competition Data only for participating in the Competition and on Kaggle.com forums. The Competition Sponsor reserves the right to disqualify any Participant who uses the Competition Data other than as permitted by the Competition Website and these Rules.
+
+b. Data Security.
+
+You agree to use reasonable and suitable measures to prevent persons who have not formally agreed to these Rules from gaining access to the Competition Data. You agree not to transmit, duplicate, publish, redistribute or otherwise provide or make available the Competition Data to any party not participating in the Competition. You must notify Kaggle promptly upon discovering any possible unauthorized transmission of or unauthorized access to the Competition Data and agree to work with Kaggle to rectify any unauthorized transmission or access.
+2.5. WINNER LICENSE
+a. Under Section 2.9 (Winners Obligations) of the General Rules below, you hereby grant and will grant the Competition Sponsor the following license(s) with respect to your Submission if you are a Competition winner:
+
+Non-Exclusive: You hereby grant and will grant to Competition Sponsor and its designees a worldwide, non-exclusive, sub-licensable, transferable, fully paid-up, royalty-free, perpetual, irrevocable right to use, reproduce, distribute, create derivative works of, publicly perform, publicly display, digitally perform, make, have made, sell, offer for sale and import your winning Submission and the source code used to generate the Submission, in any media now known or developed in the future, for any purpose whatsoever, commercial or otherwise, without further approval by or payment to you.
+
+For generally commercially available software that you used to generate your Submission that is not owned by you, but that can be procured by the Competition Sponsor without undue expense, you do not need to grant the license in the preceding Section for that software.
+
+In the event that input data or pretrained models with an incompatible license are used to generate your winning solution, you do not need to grant an open source license in the preceding Section for that data and/or model(s).
+
+b. You may be required by the Sponsor to provide a detailed description of how the winning Submission was generated, to the Competition Sponsor’s specifications, as outlined in Section 2.9, Winner’s Obligations. This may include a detailed description of methodology, where one must be able to reproduce the approach by reading the description, and includes a detailed explanation of the architecture, preprocessing, loss function, training details, hyper-parameters, etc. The description should also include a link to a code repository with complete and detailed instructions so that the results obtained can be reproduced.
+
+2.6. EXTERNAL DATA AND TOOLS
+a. You may use data other than the Competition Data (“External Data”) to develop and test your Submissions. However, you will ensure the External Data is either publicly available and equally accessible to use by all Participants of the Competition for purposes of the competition at no cost to the other Participants, or satisfies the Reasonableness criteria as outlined in Section 2.6.b below. The ability to use External Data under this Section does not limit your other obligations under these Competition Rules, including but not limited to Section 2.9 (Winners Obligations).
+
+b. The use of external data and models is acceptable unless specifically prohibited by the Host. Because of the potential costs or restrictions (e.g., “geo restrictions”) associated with obtaining rights to use external data or certain software and associated tools, their use must be “reasonably accessible to all” and of “minimal cost”. Also, regardless of the cost challenges as they might affect all Participants during the course of the competition, the costs of potentially procuring a license for software used to generate a Submission, must also be considered. The Host will employ an assessment of whether or not the following criteria can exclude the use of the particular LLM, data set(s), or tool(s):
+
+Are Participants being excluded from a competition because of the "excessive" costs for access to certain LLMs, external data, or tools that might be used by other Participants. The Host will assess the excessive cost concern by applying a “Reasonableness” standard (the “Reasonableness Standard”). The Reasonableness Standard will be determined and applied by the Host in light of things like cost thresholds and accessibility.
+
+By way of example only, a small subscription charge to use additional elements of a large language model such as Gemini Advanced are acceptable if meeting the Reasonableness Standard of Sec. 8.2. Purchasing a license to use a proprietary dataset that exceeds the cost of a prize in the competition would not be considered reasonable.
+
+c. Automated Machine Learning Tools (“AMLT”)
+
+Individual Participants and Teams may use automated machine learning tool(s) (“AMLT”) (e.g., Google toML, H2O Driverless AI, etc.) to create a Submission, provided that the Participant or Team ensures that they have an appropriate license to the AMLT such that they are able to comply with the Competition Rules.
+2.7. ELIGIBILITY
+a. Unless otherwise stated in the Competition-Specific Rules above or prohibited by internal policies of the Competition Entities, employees, interns, contractors, officers and directors of Competition Entities may enter and participate in the Competition, but are not eligible to win any Prizes. "Competition Entities" means the Competition Sponsor, Kaggle Inc., and their respective parent companies, subsidiaries and affiliates. If you are such a Participant from a Competition Entity, you are subject to all applicable internal policies of your employer with respect to your participation.
+
+2.8. PRIVATE CODE SHARING
+a. Private Code Sharing. Unless otherwise specifically permitted under the Competition Website or Competition Specific Rules above, during the Competition Period, you are not allowed to privately share source or executable code developed in connection with or based upon the Competition Data or other source or executable code relevant to the Competition (“Competition Code”). This prohibition includes sharing Competition Code between separate Teams, unless a Team merger occurs. Any such sharing of Competition Code is a breach of these Competition Rules and may result in disqualification.
+
+b. Public Code Sharing. You are permitted to publicly share Competition Code, provided that such public sharing does not violate the intellectual property rights of any third party. If you do choose to share Competition Code or other such code, you are required to share it on Kaggle.com on the discussion forum or notebooks associated specifically with the Competition for the benefit of all competitors. By so sharing, you are deemed to have licensed the shared code under an Open Source Initiative-approved license (see www.opensource.org) that in no event limits commercial use of such Competition Code or model containing or depending on such Competition Code.
+
+c. Use of Open Source. Unless otherwise stated in the Specific Competition Rules above, if open source code is used in the model to generate the Submission, then you must only use open source code licensed under an Open Source Initiative-approved license (see www.opensource.org) that in no event limits commercial use of such code or model containing or depending on such code.
+
+2.9. WINNER’S OBLIGATIONS
+a. As a condition to being awarded a Prize, a Prize winner must fulfill the following obligation(s):
+
+Deliver to the Competition Sponsor the final model's software code as used to generate the winning Submission and associated documentation. The delivered software code must be capable of generating the winning Submission, and contain a description of resources required to build and/or run the executable code successfully. For avoidance of doubt, delivered software code should include training code, inference code, and a description of the required computational environment.
+Kaggle Competition Foundational Rules
+(Non-editable)
+
+Competition participants must also agree to Kaggle's Foundational Competition Rules. These rules will supersede the competition-specific rules in the event of any conflict.
+The following Kaggle Competition Foundational Rules (“ Foundational Rules ”) apply to every competition regardless of whether the Sponsor creates competition-specific rules. Any competition-specific rules provided by the Sponsor are in addition to these rules, and in the case of any conflict or inconsistency, these Foundational Rules control and nullify contrary competition-specific rules.
+
+GENERAL COMPETITION RULES - BINDING AGREEMENT
+1. ELIGIBILITY
+a. To be eligible to enter the Competition, you must be:
+
+a registered account holder at Kaggle.com;
+the older of 18 years old or the age of majority in your jurisdiction of residence (unless otherwise agreed to by Competition Sponsor and appropriate parental/guardian consents have been obtained by Competition Sponsor);
+not a resident of Crimea, so-called Donetsk People's Republic (DNR) or Luhansk People's Republic (LNR), Cuba, Iran, Syria, or North Korea; and
+not a person or representative of an entity under U.S. export controls or sanctions (see: https://www.treasury.gov/resourcecenter/sanctions/Programs/Pages/Programs.aspx).
+b. Competitions are open to residents of the United States and worldwide, except that if you are a resident of Crimea, so-called Donetsk People's Republic (DNR) or Luhansk People's Republic (LNR), Cuba, Iran, Syria, North Korea, or are subject to U.S. export controls or sanctions, you may not enter the Competition. Other local rules and regulations may apply to you, so please check your local laws to ensure that you are eligible to participate in skills-based competitions. The Competition Host reserves the right to forego or award alternative Prizes where needed to comply with local laws. If a winner is located in a country where prizes cannot be awarded, then they are not eligible to receive a prize.
+
+c. If you are entering as a representative of a company, educational institution or other legal entity, or on behalf of your employer, these rules are binding on you, individually, and the entity you represent or where you are an employee. If you are acting within the scope of your employment, or as an agent of another party, you warrant that such party or your employer has full knowledge of your actions and has consented thereto, including your potential receipt of a Prize. You further warrant that your actions do not violate your employer's or entity's policies and procedures.
+
+d. The Competition Sponsor reserves the right to verify eligibility and to adjudicate on any dispute at any time. If you provide any false information relating to the Competition concerning your identity, residency, mailing address, telephone number, email address, ownership of right, or information required for entering the Competition, you may be immediately disqualified from the Competition.
+
+2. SPONSOR AND HOSTING PLATFORM
+a. The Competition is sponsored by Competition Sponsor named above. The Competition is hosted on behalf of Competition Sponsor by Kaggle Inc. ("Kaggle"). Kaggle is an independent contractor of Competition Sponsor, and is not a party to this or any agreement between you and Competition Sponsor. You understand that Kaggle has no responsibility with respect to selecting the potential Competition winner(s) or awarding any Prizes. Kaggle will perform certain administrative functions relating to hosting the Competition, and you agree to abide by the provisions relating to Kaggle under these Rules. As a Kaggle.com account holder and user of the Kaggle competition platform, remember you have accepted and are subject to the Kaggle Terms of Service at www.kaggle.com/terms in addition to these Rules.
+
+3. COMPETITION PERIOD
+a. For the purposes of Prizes, the Competition will run from the Start Date and time to the Final Submission Deadline (such duration the “Competition Period”). The Competition Timeline is subject to change, and Competition Sponsor may introduce additional hurdle deadlines during the Competition Period. Any updated or additional deadlines will be publicized on the Competition Website. It is your responsibility to check the Competition Website regularly to stay informed of any deadline changes. YOU ARE RESPONSIBLE FOR DETERMINING THE CORRESPONDING TIME ZONE IN YOUR LOCATION.
+
+4. COMPETITION ENTRY
+a. NO PURCHASE NECESSARY TO ENTER OR WIN. To enter the Competition, you must register on the Competition Website prior to the Entry Deadline, and follow the instructions for developing and entering your Submission through the Competition Website. Your Submissions must be made in the manner and format, and in compliance with all other requirements, stated on the Competition Website (the "Requirements"). Submissions must be received before any Submission deadlines stated on the Competition Website. Submissions not received by the stated deadlines will not be eligible to receive a Prize.
+b. Submissions may not use or incorporate information from hand labeling or human prediction of the validation dataset or test data records.
+c. If the Competition is a multi-stage competition with temporally separate training and/or test data, one or more valid Submissions may be required during each Competition stage in the manner described on the Competition Website in order for the Submissions to be Prize eligible.
+d. Submissions are void if they are in whole or part illegible, incomplete, damaged, altered, counterfeit, obtained through fraud, or late. Competition Sponsor reserves the right to disqualify any entrant who does not follow these Rules, including making a Submission that does not meet the Requirements.
+
+5. INDIVIDUALS AND TEAMS
+a. Individual Account. You may make Submissions only under one, unique Kaggle.com account. You will be disqualified if you make Submissions through more than one Kaggle account, or attempt to falsify an account to act as your proxy. You may submit up to the maximum number of Submissions per day as specified on the Competition Website.
+b. Teams. If permitted under the Competition Website guidelines, multiple individuals may collaborate as a Team; however, you may join or form only one Team. Each Team member must be a single individual with a separate Kaggle account. You must register individually for the Competition before joining a Team. You must confirm your Team membership to make it official by responding to the Team notification message sent to your Kaggle account. Team membership may not exceed the Maximum Team Size stated on the Competition Website.
+c. Team Merger. Teams may request to merge via the Competition Website. Team mergers may be allowed provided that: (i) the combined Team does not exceed the Maximum Team Size; (ii) the number of Submissions made by the merging Teams does not exceed the number of Submissions permissible for one Team at the date of the merger request; (iii) the merger is completed before the earlier of: any merger deadline or the Competition deadline; and (iv) the proposed combined Team otherwise meets all the requirements of these Rules.
+d. Private Sharing. No private sharing outside of Teams. Privately sharing code or data outside of Teams is not permitted. It's okay to share code if made available to all Participants on the forums.
+
+6. SUBMISSION CODE REQUIREMENTS
+a. Private Code Sharing. Unless otherwise specifically permitted under the Competition Website or Competition Specific Rules above, during the Competition Period, you are not allowed to privately share source or executable code developed in connection with or based upon the Competition Data or other source or executable code relevant to the Competition (“Competition Code”). This prohibition includes sharing Competition Code between separate Teams, unless a Team merger occurs. Any such sharing of Competition Code is a breach of these Competition Rules and may result in disqualification.
+b. Public Code Sharing. You are permitted to publicly share Competition Code, provided that such public sharing does not violate the intellectual property rights of any third party. If you do choose to share Competition Code or other such code, you are required to share it on Kaggle.com on the discussion forum or notebooks associated specifically with the Competition for the benefit of all competitors. By so sharing, you are deemed to have licensed the shared code under an Open Source Initiative-approved license (see www.opensource.org) that in no event limits commercial use of such Competition Code or model containing or depending on such Competition Code.
+c. Use of Open Source. Unless otherwise stated in the Specific Competition Rules above, if open source code is used in the model to generate the Submission, then you must only use open source code licensed under an Open Source Initiative-approved license (see www.opensource.org) that in no event limits commercial use of such code or model containing or depending on such code.
+
+7. DETERMINING WINNERS
+a. Each Submission will be scored and ranked by the evaluation metric stated on the Competition Website. During the Competition Period, the current ranking will be visible on the Competition Website's Public Leaderboard. The potential winner(s) are determined solely by the leaderboard ranking on the Private Leaderboard, subject to compliance with these Rules. The Public Leaderboard will be based on the public test set and the Private Leaderboard will be based on the private test set.
+b. In the event of a tie, the Submission that was entered first to the Competition will be the winner. In the event a potential winner is disqualified for any reason, the Submission that received the next highest score rank will be chosen as the potential winner.
+
+8. NOTIFICATION OF WINNERS & DISQUALIFICATION
+a. The potential winner(s) will be notified by email.
+b. If a potential winner (i) does not respond to the notification attempt within one (1) week from the first notification attempt or (ii) notifies Kaggle within one week after the Final Submission Deadline that the potential winner does not want to be nominated as a winner or does not want to receive a Prize, then, in each case (i) and (ii) such potential winner will not receive any Prize, and an alternate potential winner will be selected from among all eligible entries received based on the Competition’s judging criteria.
+c. In case (i) and (ii) above Kaggle may disqualify the Participant. However, in case (ii) above, if requested by Kaggle, such potential winner may provide code and documentation to verify the Participant’s compliance with these Rules. If the potential winner provides code and documentation to the satisfaction of Kaggle, the Participant will not be disqualified pursuant to this paragraph.
+d. Competition Sponsor reserves the right to disqualify any Participant from the Competition if the Competition Sponsor reasonably believes that the Participant has attempted to undermine the legitimate operation of the Competition by cheating, deception, or other unfair playing practices or abuses, threatens or harasses any other Participants, Competition Sponsor or Kaggle.
+e. A disqualified Participant may be removed from the Competition leaderboard, at Kaggle's sole discretion. If a Participant is removed from the Competition Leaderboard, additional winning features associated with the Kaggle competition platform, for example Kaggle points or medals, may also not be awarded.
+f. The final leaderboard list will be publicly displayed at Kaggle.com. Determinations of Competition Sponsor are final and binding.
+
+9. PRIZES
+a. Prize(s) are as described on the Competition Website and are only available for winning during the time period described on the Competition Website. The odds of winning any Prize depends on the number of eligible Submissions received during the Competition Period and the skill of the Participants.
+b. All Prizes are subject to Competition Sponsor's review and verification of the Participant’s eligibility and compliance with these Rules, and the compliance of the winning Submissions with the Submissions Requirements. In the event that the Submission demonstrates non-compliance with these Competition Rules, Competition Sponsor may at its discretion take either of the following actions: (i) disqualify the Submission(s); or (ii) require the potential winner to remediate within one week after notice all issues identified in the Submission(s) (including, without limitation, the resolution of license conflicts, the fulfillment of all obligations required by software licenses, and the removal of any software that violates the software restrictions).
+c. A potential winner may decline to be nominated as a Competition winner in accordance with Section 3.8.
+d. Potential winners must return all required Prize acceptance documents within two (2) weeks following notification of such required documents, or such potential winner will be deemed to have forfeited the prize and another potential winner will be selected. Prize(s) will be awarded within approximately thirty (30) days after receipt by Competition Sponsor or Kaggle of the required Prize acceptance documents. Transfer or assignment of a Prize is not allowed.
+e. You are not eligible to receive any Prize if you do not meet the Eligibility requirements in Section 2.7 and Section 3.1 above.
+f. If a Team wins a monetary Prize, the Prize money will be allocated in even shares between the eligible Team members, unless the Team unanimously opts for a different Prize split and notifies Kaggle before Prizes are issued.
+
+10. TAXES
+a. ALL TAXES IMPOSED ON PRIZES ARE THE SOLE RESPONSIBILITY OF THE WINNERS. Payments to potential winners are subject to the express requirement that they submit all documentation requested by Competition Sponsor or Kaggle for compliance with applicable state, federal, local and foreign (including provincial) tax reporting and withholding requirements. Prizes will be net of any taxes that Competition Sponsor is required by law to withhold. If a potential winner fails to provide any required documentation or comply with applicable laws, the Prize may be forfeited and Competition Sponsor may select an alternative potential winner. Any winners who are U.S. residents will receive an IRS Form-1099 in the amount of their Prize.
+
+11. GENERAL CONDITIONS
+a. All federal, state, provincial and local laws and regulations apply.
+
+12. PUBLICITY
+a. You agree that Competition Sponsor, Kaggle and its affiliates may use your name and likeness for advertising and promotional purposes without additional compensation, unless prohibited by law.
+
+13. PRIVACY
+a. You acknowledge and agree that Competition Sponsor and Kaggle may collect, store, share and otherwise use personally identifiable information provided by you during the Kaggle account registration process and the Competition, including but not limited to, name, mailing address, phone number, and email address (“Personal Information”). Kaggle acts as an independent controller with regard to its collection, storage, sharing, and other use of this Personal Information, and will use this Personal Information in accordance with its Privacy Policy <www.kaggle.com/privacy>, including for administering the Competition. As a Kaggle.com account holder, you have the right to request access to, review, rectification, portability or deletion of any personal data held by Kaggle about you by logging into your account and/or contacting Kaggle Support at <www.kaggle.com/contact>.
+b. As part of Competition Sponsor performing this contract between you and the Competition Sponsor, Kaggle will transfer your Personal Information to Competition Sponsor, which acts as an independent controller with regard to this Personal Information. As a controller of such Personal Information, Competition Sponsor agrees to comply with all U.S. and foreign data protection obligations with regard to your Personal Information. Kaggle will transfer your Personal Information to Competition Sponsor in the country specified in the Competition Sponsor Address listed above, which may be a country outside the country of your residence. Such country may not have privacy laws and regulations similar to those of the country of your residence.
+
+14. WARRANTY, INDEMNITY AND RELEASE
+a. You warrant that your Submission is your own original work and, as such, you are the sole and exclusive owner and rights holder of the Submission, and you have the right to make the Submission and grant all required licenses. You agree not to make any Submission that: (i) infringes any third party proprietary rights, intellectual property rights, industrial property rights, personal or moral rights or any other rights, including without limitation, copyright, trademark, patent, trade secret, privacy, publicity or confidentiality obligations, or defames any person; or (ii) otherwise violates any applicable U.S. or foreign state or federal law.
+b. To the maximum extent permitted by law, you indemnify and agree to keep indemnified Competition Entities at all times from and against any liability, claims, demands, losses, damages, costs and expenses resulting from any of your acts, defaults or omissions and/or a breach of any warranty set forth herein. To the maximum extent permitted by law, you agree to defend, indemnify and hold harmless the Competition Entities from and against any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities, damages, costs and expenses (including reasonable attorneys fees) arising out of or accruing from: (a) your Submission or other material uploaded or otherwise provided by you that infringes any third party proprietary rights, intellectual property rights, industrial property rights, personal or moral rights or any other rights, including without limitation, copyright, trademark, patent, trade secret, privacy, publicity or confidentiality obligations, or defames any person; (b) any misrepresentation made by you in connection with the Competition; (c) any non-compliance by you with these Rules or any applicable U.S. or foreign state or federal law; (d) claims brought by persons or entities other than the parties to these Rules arising from or related to your involvement with the Competition; and (e) your acceptance, possession, misuse or use of any Prize, or your participation in the Competition and any Competition-related activity.
+c. You hereby release Competition Entities from any liability associated with: (a) any malfunction or other problem with the Competition Website; (b) any error in the collection, processing, or retention of any Submission; or (c) any typographical or other error in the printing, offering or announcement of any Prize or winners.
+
+15. INTERNET
+a. Competition Entities are not responsible for any malfunction of the Competition Website or any late, lost, damaged, misdirected, incomplete, illegible, undeliverable, or destroyed Submissions or entry materials due to system errors, failed, incomplete or garbled computer or other telecommunication transmission malfunctions, hardware or software failures of any kind, lost or unavailable network connections, typographical or system/human errors and failures, technical malfunction(s) of any telephone network or lines, cable connections, satellite transmissions, servers or providers, or computer equipment, traffic congestion on the Internet or at the Competition Website, or any combination thereof, which may limit a Participant’s ability to participate.
+
+16. RIGHT TO CANCEL, MODIFY OR DISQUALIFY
+a. If for any reason the Competition is not capable of running as planned, including infection by computer virus, bugs, tampering, unauthorized intervention, fraud, technical failures, or any other causes which corrupt or affect the administration, security, fairness, integrity, or proper conduct of the Competition, Competition Sponsor reserves the right to cancel, terminate, modify or suspend the Competition. Competition Sponsor further reserves the right to disqualify any Participant who tampers with the submission process or any other part of the Competition or Competition Website. Any attempt by a Participant to deliberately damage any website, including the Competition Website, or undermine the legitimate operation of the Competition is a violation of criminal and civil laws. Should such an attempt be made, Competition Sponsor and Kaggle each reserves the right to seek damages from any such Participant to the fullest extent of the applicable law.
+
+17. NOT AN OFFER OR CONTRACT OF EMPLOYMENT
+a. Under no circumstances will the entry of a Submission, the awarding of a Prize, or anything in these Rules be construed as an offer or contract of employment with Competition Sponsor or any of the Competition Entities. You acknowledge that you have submitted your Submission voluntarily and not in confidence or in trust. You acknowledge that no confidential, fiduciary, agency, employment or other similar relationship is created between you and Competition Sponsor or any of the Competition Entities by your acceptance of these Rules or your entry of your Submission.
+
+18. DEFINITIONS
+a. "Competition Data" are the data or datasets available from the Competition Website for the purpose of use in the Competition, including any prototype or executable code provided on the Competition Website. The Competition Data will contain private and public test sets. Which data belongs to which set will not be made available to Participants.
+b. An “Entry” is when a Participant has joined, signed up, or accepted the rules of a competition. Entry is required to make a Submission to a competition.
+c. A “Final Submission” is the Submission selected by the user, or automatically selected by Kaggle in the event not selected by the user, that is/are used for final placement on the competition leaderboard.
+d. A “Participant” or “Participant User” is an individual who participates in a competition by entering the competition and making a Submission.
+e. The “Private Leaderboard” is a ranked display of Participants’ Submission scores against the private test set. The Private Leaderboard determines the final standing in the competition.
+f. The “Public Leaderboard” is a ranked display of Participants’ Submission scores against a representative sample of the test data. This leaderboard is visible throughout the competition.
+g. A “Sponsor” is responsible for hosting the competition, which includes but is not limited to providing the data for the competition, determining winners, and enforcing competition rules.
+h. A “Submission” is anything provided by the Participant to the Sponsor to be evaluated for competition purposes and determine leaderboard position. A Submission may be made as a model, notebook, prediction file, or other format as determined by the Sponsor.
+i. A “Team” is one or more Participants participating together in a Kaggle competition, by officially merging together as a Team within the competition platform.
+
+Rules
+
+
+-----------------------------------------------------------------------------------------------------------------------
