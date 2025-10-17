@@ -139,3 +139,5 @@ optuna.db
 .env.local
 .env.*.local
 *.orig
+
+MABE-Social_Action_Recognition_in_Mice/challenge_downloads/*

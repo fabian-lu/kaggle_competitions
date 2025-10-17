@@ -1,0 +1,47 @@
+Note: Kernel = Notebook
+
+
+
+################################### Download ################################################################
+
+# List all files in competition
+kaggle competitions files MABe-mouse-behavior-detection
+
+# Download all competition files
+kaggle competitions download MABe-mouse-behavior-detection
+
+# Download specific file
+kaggle competitions download MABe-mouse-behavior-detection -f train.csv
+
+# Download to specific path
+kaggle competitions download MABe-mouse-behavior-detection -p /path/to/folder
+
+
+
+
+
+################################### Submit ################################################################
+
+# Submit a file (for regular competitions )
+kaggle competitions submit MABe-mouse-behavior-detection \
+  -f submission.csv \
+  -m "Comment"
+
+# Submit a kernel/notebook (for code competitions like MABe)
+kaggle competitions submit MABe-mouse-behavior-detection \
+  -k fabianlukassen/notebook-name \
+  -m "Comment"
+
+# Submit specific version of kernel
+kaggle competitions submit MABe-mouse-behavior-detection \
+  -k fabianlukassen/notebook-name \
+  -v "Version 5" \
+  -m "Comment"
+
+
+
+
+ ################################### Leaderbord  ################################################################
+
+
+ kaggle competitions leaderboard MABe-mouse-behavior-detection --show
