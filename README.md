@@ -6,7 +6,39 @@ This repository contains my work on various Kaggle competitions. I recently star
 
 ## Competitions
 
-### 1. China Real Estate Demand Prediction
+### 1. MABe Challenge - Social Action Recognition in Mice
+
+**Status:** 🚧 Ongoing
+
+#### Competition Overview
+Identify 30+ social and non-social behaviors in groups of mice from pose tracking data. Must predict behavioral events (agent, target, action, start/stop frames) from x,y body part coordinates over time.
+
+
+
+### Setup & Understanding
+- Downloaded competition data (2.7GB training tracking, 3.5MB annotations)
+- Analyzed data structure: 863 labeled videos + 7,926 unlabeled videos (MABe22)
+- Identified 19 different labs with varying tracking equipment and body parts
+
+#### EDA (In Progress)
+- Loaded and explored metadata (train.csv: 8,789 videos)
+- Implemented direction calculation (tail→nose angle) for each mouse
+- Started visualization of mouse positions and orientations in arena
+
+#### Data Structure
+- `train.csv` - video metadata (lab, fps, duration, arena specs, behaviors)
+- `train_tracking/{lab}/{video_id}.parquet` - frame-by-frame x,y coordinates (features)
+- `train_annotation/{lab}/{video_id}.parquet` - behavioral events with start/stop frames (targets)
+
+#### Next Steps
+- Complete EDA: behavior distributions, temporal patterns, trajectory analysis
+- Feature engineering: distances, velocities, relative angles, interactions
+- Baseline model with gradient boosting (XGBoost/LightGBM)
+- Explore unlabeled data for pre-training
+
+---
+
+### 2. China Real Estate Demand Prediction
 
 **Status**: Completed
 **Competition Link**: [Real Estate Demand Prediction](https://www.kaggle.com/competitions/china-real-estate-demand-prediction)
@@ -63,5 +95,4 @@ This repository contains my work on various Kaggle competitions. I recently star
 - `submission.csv` - Final predictions submitted to Kaggle
 
 ---
-
 
