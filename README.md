@@ -13,7 +13,10 @@ This repository contains my work on various Kaggle competitions. I recently star
 #### Competition Overview
 Identify 30+ social and non-social behaviors in groups of mice from pose tracking data. Must predict behavioral events (agent, target, action, start/stop frames) from x,y body part coordinates over time.
 
+#### Visualization
+![Mouse Behavior Animation](MABE-Social_Action_Recognition_in_Mice/animations/mice_behavior_10%20000_frames.gif)
 
+*Animation showing mouse positions, orientations, and bounding boxes over 1000 frames*
 
 ### Setup & Understanding
 - Downloaded competition data (2.7GB training tracking, 3.5MB annotations)
